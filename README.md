@@ -7,6 +7,12 @@ python es的再封装
 
 #### 使用说明
 
+> 目前项目处于测试阶段,由于不同版本的Python/elasticsearch的接口不同,存在一些差异,目前该项目依赖于Python/elasticsearch5.0.0, 已知最新版本的Python/elasticsearch会出错,主要是接口参数错误
+该问题会在后期进行解决
+
+##### 安装
+`pip3 install elasticsearch_tool`
+
 简单使用
 
 ```python
@@ -80,8 +86,12 @@ if __name__ == '__main__':
         nop = doc.num > 20
 
         doc.save()
-        
+    
+    # 检索text字段中包含[检索, 检, 索]的文档,这是es默认的简单搜索
     DocTry().search(text='检索').all()
+    
+    # 搜索文档中:num>50, text匹配词汇[单词],并且不含有词汇[一样],而且必须满足(text包含词汇[知识], 或者文档id大于100, 
+    # 或者word字段的词汇包含['你们', '那么', '已收到', '一样']之一)这些条件之一,且has_go字段不等于True的所有文档
     all_re = DocTry().filter(DocTry.num > 50,
                              DocTry.text=='单词',
                              DocTry.text!='一样',
