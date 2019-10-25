@@ -14,8 +14,7 @@ python es的再封装
 搜索测试工具,数据填充脚本
 """
 import random, time
-from elasticsearch_tool.elements.document import Doc, Fields
-from elasticsearch_tool.base_element.operate import datetime_tool, NOT, OR
+from elasticsearch_tool import Doc, Fields, NOT, OR
 from datetime import datetime
 
 from elasticsearch_tool.config import Config

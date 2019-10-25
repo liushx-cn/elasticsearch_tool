@@ -5,3 +5,7 @@ thanks to https://es.xiaoleilu.com/
 VERSION = (0, 9, 1)
 __version__ = VERSION
 __versionstr__ = '.'.join(map(str, VERSION))
+
+
+from .elements.document import Doc, Fields
+from .base_element.operate import NOT, OR, datetime_tool
