@@ -1,7 +1,7 @@
 # ht_es
 
 #### 介绍
-python es的再封装
+python es的辅助工具,提供类似ORM的操作方式
 
 主要借鉴SQLAlchemy的方式
 
