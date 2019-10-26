@@ -378,7 +378,7 @@ class Sql(object):
         :param doc: 文档对象 Doc instance
         :return:
         """
-        return self.__query('delete', indices=self.indices, types=self.types, id=doc.get_pk())
+        return self.__query('del', indices=self.indices, types=self.types, id=doc.get_pk())
 
     def range(self, f, op, v):
         if op in ('gt', 'ge', 'lt', 'le'):
