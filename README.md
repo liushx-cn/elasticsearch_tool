@@ -130,7 +130,7 @@ if __name__ == '__main__':
     Query.get(q='单词').exists()      # True/False
     Query.get(q='词汇').count()       # int
     
-    # 分页
+    # 分页, 分页不能单独调用offset(), 且调用顺序必须为 .limit().offset()
     Query.search(q='').limit(30).offset(0).all()
     
     
@@ -142,6 +142,17 @@ if __name__ == '__main__':
 如果字段类型为列表,想查询字段包含某个词的文档,可以使用字段方法.in_(), 接受一个列表,元组
 NOT和OR不支持嵌套,如果想进行特别复杂的查询,文档提供一个接口
 `Doc.with_raw()`
+```python
+    body = {
+        'query': {
+            'match': {
+                'text': '单词'
+            }
+        }
+    }
+    resu = Query.order_by('num').limit(3).with_raw(body).all()
+    print([res.query_to_dict() for res in resu])
+```
 该方法接受一个符合es语法的查询结构,需要为字典格式, 该接口仍可配合分页,存在,数量,排序等非查询接口使用
 
 更多使用方法,请见: 
