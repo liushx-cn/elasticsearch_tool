@@ -15,6 +15,7 @@ Python3.6
 elasticsearch-5.6.0
 elasticsearch-analysis-ik-5.6.0
 
+详尽文档请参阅: https://www.liushx.com/haiton/article/10000015.html?b=1
 
 ##### 安装
 `pip3 install elasticsearch_tool`
