@@ -421,7 +421,6 @@ class Sql(object):
         self.with_raw = body
 
     def search(self):
-        print(self.body)
         result = self.__query('get', indices=self.indices, types=self.types, id=None, body=self.sql_string,
                               **self.query_params)
 

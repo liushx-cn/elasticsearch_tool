@@ -93,6 +93,8 @@ class Doc(BaseDocument, metaclass=ClassOperate):
         else:
             raise TypeError('method with_raw accepted dict')
 
+        return self
+
     def filter(self, *conditions):
         """
         过滤操作,对文档进行过滤,然后再搜索
@@ -297,6 +299,8 @@ class Doc(BaseDocument, metaclass=ClassOperate):
                             '你是傻叉吗?会用切片语法吗?!')
         self.limit(limit)
         self.offset(offset)
+
+        return self
 
 
 class Fields(object):
