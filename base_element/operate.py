@@ -44,7 +44,7 @@ def compare_op(obj, op, other):
     return HtEsOperator(obj, op, bo, other)
 
 
-def not_(x):
+def not_(*x):
     if isinstance(x, HtEsOperator):
         if x.params[1] == 'not':
             raise UsageError('if use such as NOT(NOT(ele==v or ele != v2)), you can do it like ele==v or ele!=v2')

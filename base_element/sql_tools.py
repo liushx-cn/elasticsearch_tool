@@ -111,9 +111,11 @@ class SelectBody(object):
                 self.q_bool['must'] = [{'terms': {field: value}}]
 
         elif op == 'not':
-            if value.params[1] == 'ne':
-                raise UsageError('if you want filter not(ele!=value), you can use ele==value instead !')
-            terms = self.treat_values(value)
+            terms = []
+            for condition in value:
+                assert condition.params[1] != 'ne', UsageError('if you want filter not(ele!=value), you can use ele==value instead !')
+                terms.extend(self.treat_values(condition))
+
             terms.extend(self.q_bool.pop('must_not', []))
             self.q_bool['must_not'] = terms
 

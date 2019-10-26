@@ -180,6 +180,16 @@ def ele_factory(doc):
     }
     :return:
     """
+    if isinstance(doc.ele_fields, list):
+        docs = doc.ele_fields
+    elif isinstance(doc.ele_fields, dict):
+        docs = [doc.ele_fields, ]
+    else:
+        raise TypeError
+
+    if doc._wanted:
+        return [{k: doc_.get('_source', {}).get(k) for k in doc._wanted} for doc_ in docs]
+
     def init_field(fields):
         doc_obj = copy.deepcopy(doc)
 
@@ -192,12 +202,6 @@ def ele_factory(doc):
         doc._id = fields.get(doc.__pk__)
         return doc_obj
 
-    if isinstance(doc.ele_fields, list):
-        docs = doc.ele_fields
-    elif isinstance(doc.ele_fields, dict):
-        docs = [doc.ele_fields, ]
-    else:
-        raise TypeError
 
     result = [init_field(doc_) for doc_ in docs]
 

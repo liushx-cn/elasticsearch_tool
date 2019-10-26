@@ -32,6 +32,7 @@ class Doc(BaseDocument, metaclass=ClassOperate):
         self._p_f_map = {}
         self._had_request = False
         self._use_catch = True
+        self._wanted = []
         if not self.__types__:
             self.__types__ = self.__class__.__name__
         self.indices = format_name_to_normal(self.__indices__)
@@ -61,22 +62,16 @@ class Doc(BaseDocument, metaclass=ClassOperate):
         :param args:
         :return:
         """
-        if len(args) == 1:
-            if args[0].startswith('-'):
-                body = {'_sort': args[0][1:]}
-            else:
-                body = {'sort': args[0]}
-        else:
-            body = {'sort': [self.__sort_fields(s) for s in args]}
+        body = {'sort': [self.__sort_fields(s) for s in args]}
         self._query.other_params['order'] = body
         return self
 
     @staticmethod
     def __sort_fields(s):
         if s.startswith('-'):
-            return {s[1:]: {'order': 'asc'}}
+            return {s[1:]: {'order': 'desc'}}
         else:
-            return {s: {'order': 'desc'}}
+            return {s: {'order': 'asc'}}
 
     def search(self, op=None, **key_words):
         """
@@ -173,6 +168,7 @@ class Doc(BaseDocument, metaclass=ClassOperate):
                 raise ValueError('no field named %s, choices is %s'%(arg, self.p_c_s))
 
         self._query.query_params['_source'] = ','.join(args)
+        self._wanted.extend(args)
         return self
 
     def exists(self):
@@ -188,7 +184,8 @@ class Doc(BaseDocument, metaclass=ClassOperate):
         :return:
         """
         self._query.query_params.update({'size': 1, 'from_': 0})
-        return self.__work()
+        result = self.__work()
+        return result[0] if result else None
 
     def all(self):
         """
@@ -245,7 +242,8 @@ class Doc(BaseDocument, metaclass=ClassOperate):
 
     def update(self, **key_words):
         """
-        文档更新, 用于更新部分字段
+        文档更新, 用于更新部分字段, 不管是局部更新还是全部更新,es都会执行删除重建的操作,区别是局部更新节省网络资源
+        注意,该方式更新后当前文档实例的数据不会更新为新数据,需要重新获取,如果需要同步更新,请使用先修改,再save()的方式
         :param key_words: field=value,field=value
         :return:
         """
