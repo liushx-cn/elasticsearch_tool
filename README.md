@@ -8,7 +8,13 @@ python es的辅助工具,提供类似ORM的操作方式
 #### 使用说明
 
 > 目前项目处于测试阶段,由于不同版本的Python/elasticsearch的接口不同,存在一些差异,目前该项目依赖于Python/elasticsearch5.0.0, 已知最新版本的Python/elasticsearch会出错,主要是接口参数错误
-该问题会在后期进行解决
+该问题会在后期进行解决, 
+
+测试环境为:
+Python3.6
+elasticsearch-5.6.0
+elasticsearch-analysis-ik-5.6.0
+
 
 ##### 安装
 `pip3 install elasticsearch_tool`
