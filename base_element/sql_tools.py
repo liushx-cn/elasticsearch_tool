@@ -311,6 +311,16 @@ class Sql(object):
 
     @property
     def sql_string(self):
+        if self.with_raw:
+            self.body = self.with_raw
+            self.with_raw = {}
+
+        else:
+            self.body = self._stb.create().body
+            self._stb.init()
+
+        if self.other_params.get('order'):
+            self.body.update(self.other_params['order'])
         return json.dumps(self.body)
 
     def some_field(self, *args):
@@ -411,15 +421,6 @@ class Sql(object):
         self.with_raw = body
 
     def search(self):
-        if not self.with_raw:
-            self.body = self._stb.create().body
-            self._stb.init()
-        else:
-            self.body = self.with_raw
-            self.with_raw = {}
-
-        if self.other_params.get('order'):
-            self.body.update(self.other_params['order'])
         print(self.body)
         result = self.__query('get', indices=self.indices, types=self.types, id=None, body=self.sql_string,
                               **self.query_params)
