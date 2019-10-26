@@ -320,7 +320,7 @@ class Sql(object):
             self._stb.init()
 
         if self.other_params.get('order'):
-            self.body.update(self.other_params['order'])
+            self.body.update(self.other_params.pop('order'))
         return json.dumps(self.body)
 
     def some_field(self, *args):
@@ -423,5 +423,7 @@ class Sql(object):
     def search(self):
         result = self.__query('get', indices=self.indices, types=self.types, id=None, body=self.sql_string,
                               **self.query_params)
+        if self.query_params:
+            self.query_params = {}
 
         return result
