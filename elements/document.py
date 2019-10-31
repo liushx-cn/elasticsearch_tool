@@ -295,8 +295,7 @@ class Doc(BaseDocument, metaclass=ClassOperate):
             limit = 1
             offset = item
         else:
-            raise TypeError('What`s wrong with you?! do you know how to use iter[x, y, step]?'
-                            '你是傻叉吗?会用切片语法吗?!')
+            raise TypeError
         self.limit(limit)
         self.offset(offset)
 
